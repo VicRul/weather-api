@@ -5,6 +5,7 @@
 * PostgreSQL
 * Retrofit
 * Lombok
+## Установка и запуск
 Предварительно необходимо создать БД:
 ```SQL
 CREATE DATABASE weatherdb
