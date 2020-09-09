@@ -20,10 +20,10 @@ public class Radiation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "date_start")
+	@Column(name = "date_start", unique = true)
 	private String dateStart;
 
-	@Column(name = "date_end")
+	@Column(name = "date_end", unique = true)
 	private String dateEnd;
 	
 	@Column(name = "rad_value")

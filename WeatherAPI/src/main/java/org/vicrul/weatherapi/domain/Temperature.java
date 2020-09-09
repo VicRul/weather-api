@@ -20,7 +20,7 @@ public class Temperature {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "date")
+	@Column(name = "date", unique = true)
 	private String date;
 	
 	@Column(name = "avg_temp")

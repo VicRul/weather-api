@@ -20,7 +20,6 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 
 	@Override
 	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) throws Exception {
-
 		String dateStartForSearch = parseDate(dataStart);
 		String dateEndForSearch = parseDate(dataEnd);
 
