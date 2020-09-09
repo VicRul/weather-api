@@ -6,5 +6,5 @@ import org.vicrul.weatherapi.domain.Temperature;
 
 public interface TemperatureService {
 
-	List<Temperature> saveMetrics(String dataStart, String dataEnd) throws Exception;
+	List<Temperature> saveTemperatures(String dataStart, String dataEnd) throws Exception;
 }

@@ -20,6 +20,6 @@ public class TemperatureController {
 	
 	@GetMapping
 	public List<Temperature> getTemperatures(@RequestParam String dateStart, @RequestParam String dateEnd) throws Exception {
-		return tempService.saveMetrics(dateStart, dateEnd);
+		return tempService.saveTemperatures(dateStart, dateEnd);
 	}
 }

@@ -18,10 +18,8 @@ public class AllDataRepo {
 		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://pogoda.atpm-air.ru/")
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		GetAllData allData = retrofit.create(GetAllData.class);
-		System.out.println(dataStart + " " + dataEnd);
 		Call<List<String>> responseData = allData.getTemperature(dataStart, dataEnd);
 		Response<List<String>> execute = responseData.execute();
-		System.out.println(execute);
 		List<String> result = execute.body();
 		return result;
 	}
