@@ -57,4 +57,14 @@ public abstract class AbstractData {
 		}
 		return resultDate;
 	}
+	
+	protected Date parseDateToDB(String date) {
+		Date dateFromString = null;
+		try {
+			dateFromString = new SimpleDateFormat("yyyyMMdd").parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return dateFromString;	
+	}
 }

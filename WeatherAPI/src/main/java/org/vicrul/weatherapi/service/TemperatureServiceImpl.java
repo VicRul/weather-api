@@ -60,13 +60,13 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 				
 				if ((i + 1) == dates.size()) {
 					averageTemperature /= numberOfMetricsInDay;
-					temperatures.add(new Temperature(dates.get(i), averageTemperature, minTemperature, maxTemperature));
+					temperatures.add(new Temperature(parseDateToDB(dates.get(i)), averageTemperature, minTemperature, maxTemperature));
 				}
 				
 				continue;
 			} else if (i != 0 && !dates.get(i).equals(dates.get(i - 1))) {
 				averageTemperature /= numberOfMetricsInDay;
-				temperatures.add(new Temperature(dates.get(i - 1), averageTemperature, minTemperature, maxTemperature));
+				temperatures.add(new Temperature(parseDateToDB(dates.get(i - 1)), averageTemperature, minTemperature, maxTemperature));
 				averageTemperature = metrics.get(i);
 				minTemperature = metrics.get(i);
 				numberOfMetricsInDay = 0;

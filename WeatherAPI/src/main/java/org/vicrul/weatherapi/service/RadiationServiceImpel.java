@@ -1,12 +1,12 @@
 package org.vicrul.weatherapi.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.vicrul.weatherapi.api.AllDataRepo;
 import org.vicrul.weatherapi.domain.Radiation;
-import org.vicrul.weatherapi.domain.Temperature;
 import org.vicrul.weatherapi.repository.RadiationRepository;
 
 @Service
@@ -20,7 +20,7 @@ public class RadiationServiceImpel extends AbstractData implements RadiationServ
 	}
 
 	@Override
-	public List<Radiation> getMaxRadiationLevel(String dataStart, String dataEnd) throws Exception {
+	public Radiation getMaxRadiationLevel(String dataStart, String dataEnd) throws Exception {
 		String dateStartForSearch = parseDate(dataStart);
 		String dateEndForSearch = parseDate(dataEnd);
 
@@ -54,10 +54,11 @@ public class RadiationServiceImpel extends AbstractData implements RadiationServ
 				maxRadiationValue = (metrics.get(i) > metrics.get(i - 1)) ? metrics.get(i) : maxRadiationValue;
 			}
 		}
-		
-		Radiation maxRadiation = new Radiation(dataStart, dataEnd, maxRadiationValue);
+		Date dateStartToDB = parseDateToDB(dataStart);
+		Date dateEndToDB = parseDateToDB(dataEnd);
+		Radiation maxRadiation = new Radiation(dateStartToDB, dateEndToDB, maxRadiationValue);
 		radiationRepo.save(maxRadiation);
-		return radiationRepo.findAll();
+		return radiationRepo.findTopByDateStartAndDateEnd(dateStartToDB, dateEndToDB);
 	}
 
 }

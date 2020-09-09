@@ -1,11 +1,15 @@
 package org.vicrul.weatherapi.domain;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,9 +23,10 @@ public class Temperature {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
-	@Column(name = "date", unique = true)
-	private String date;
+
+	@JsonFormat(pattern="yyyy-MM-dd")
+	@Column(name = "date")
+	private Date date;
 	
 	@Column(name = "avg_temp")
 	private double averageTemperature;
@@ -32,7 +37,7 @@ public class Temperature {
 	@Column(name = "max_temp")
 	private double maxTemperature;
 
-	public Temperature(String date, double averageTemperature, double minTemperature, double maxTemperature) {
+	public Temperature(Date date, double averageTemperature, double minTemperature, double maxTemperature) {
 		this.date = date;
 		this.averageTemperature = averageTemperature;
 		this.minTemperature = minTemperature;
