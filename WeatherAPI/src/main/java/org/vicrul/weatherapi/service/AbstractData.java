@@ -16,11 +16,11 @@ public abstract class AbstractData {
 
 	protected final AllDataRepo allDataRepo;
 	
-	protected List<String> getMetrics(String dataStart, String dataEnd) {
+	protected List<String> getMetrics(String dateStart, String dateEnd) {
 		List<String> metrics = null;
 
 		try {
-			metrics = allDataRepo.getData(dataStart, dataEnd);
+			metrics = allDataRepo.getTemperature(dateStart, dateEnd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

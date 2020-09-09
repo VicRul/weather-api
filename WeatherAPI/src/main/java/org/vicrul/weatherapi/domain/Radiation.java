@@ -11,7 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ratiation")
+@Table(name = "radiation")
 @Data
 @NoArgsConstructor
 public class Radiation {
@@ -26,7 +26,7 @@ public class Radiation {
 	@Column(name = "date_end")
 	private String dateEnd;
 	
-	@Column(name = "rad-value")
+	@Column(name = "rad_value")
 	private double maxRadiationValue;
 
 	public Radiation(String dateStart, String dateEnd, double maxRadiationValue) {
