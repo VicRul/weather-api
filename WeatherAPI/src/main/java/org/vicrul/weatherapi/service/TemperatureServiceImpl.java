@@ -75,7 +75,7 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 			averageTemperature = metrics.get(i);
 			minTemperature = metrics.get(i);
 		}
-		
+		tempRepo.deleteAll();
 		tempRepo.saveAll(temperatures);
 		return tempRepo.findAll();
 	}
