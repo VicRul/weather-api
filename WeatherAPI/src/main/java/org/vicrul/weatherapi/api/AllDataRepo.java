@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.repository;
+package org.vicrul.weatherapi.api;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,13 +13,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Component
 public class AllDataRepo {
 	
-	public List<String> getData() throws IOException {
+	public List<String> getData(String dataStart, String dataEnd) throws IOException {
 		
 		Retrofit retrofit = new Retrofit.Builder().baseUrl("http://pogoda.atpm-air.ru/")
 				.addConverterFactory(GsonConverterFactory.create()).build();
 		GetAllData allData = retrofit.create(GetAllData.class);
-		Call<List<String>> responseData = allData.getTemperature();
+		System.out.println(dataStart + " " + dataEnd);
+		Call<List<String>> responseData = allData.getTemperature(dataStart, dataEnd);
 		Response<List<String>> execute = responseData.execute();
+		System.out.println(execute);
 		List<String> result = execute.body();
 		return result;
 	}

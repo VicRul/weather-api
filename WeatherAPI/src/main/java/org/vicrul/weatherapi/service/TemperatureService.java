@@ -2,7 +2,9 @@ package org.vicrul.weatherapi.service;
 
 import java.util.List;
 
-public interface AllDataService {
+import org.vicrul.weatherapi.domain.Temperature;
 
-	List<String> getTemperature();
+public interface TemperatureService {
+
+	List<Temperature> saveMetrics(String dataStart, String dataEnd) throws Exception;
 }
