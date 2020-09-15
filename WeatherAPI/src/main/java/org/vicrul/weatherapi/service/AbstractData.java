@@ -15,12 +15,16 @@ import lombok.AllArgsConstructor;
 public abstract class AbstractData {
 
 	protected final AllDataRepo allDataRepo;
-	
-	protected List<String> getMetrics(String dateStart, String dateEnd) {
+
+	protected List<String> getMetrics(String dateStart, String dateEnd, String type) {
 		List<String> metrics = null;
 
 		try {
-			metrics = allDataRepo.getTemperature(dateStart, dateEnd);
+			if (type.equals("temp")) {
+				metrics = allDataRepo.getTemperature(dateStart, dateEnd);
+			} else {
+				metrics = allDataRepo.getRadiation(dateStart, dateEnd);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -57,7 +61,7 @@ public abstract class AbstractData {
 		}
 		return resultDate;
 	}
-	
+
 	protected Date parseDateToDB(String date) {
 		Date dateFromString = null;
 		try {
@@ -65,6 +69,6 @@ public abstract class AbstractData {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return dateFromString;	
+		return dateFromString;
 	}
 }
