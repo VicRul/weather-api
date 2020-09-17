@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.service;
+package org.vicrul.weatherapi.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.vicrul.weatherapi.api.AllDataRepo;
 import org.vicrul.weatherapi.domain.Temperature;
 import org.vicrul.weatherapi.repository.TemperatureRepository;
+import org.vicrul.weatherapi.service.TemperatureService;
 
 @Service
 public class TemperatureServiceImpl extends AbstractData implements TemperatureService {

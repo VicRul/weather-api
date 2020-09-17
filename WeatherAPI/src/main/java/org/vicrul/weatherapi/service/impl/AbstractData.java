@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.service;
+package org.vicrul.weatherapi.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.service;
+package org.vicrul.weatherapi.service.impl;
 
 public enum OperationType {
 	

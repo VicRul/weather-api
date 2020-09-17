@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.service;
+package org.vicrul.weatherapi.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.vicrul.weatherapi.api.AllDataRepo;
 import org.vicrul.weatherapi.domain.Radiation;
 import org.vicrul.weatherapi.repository.RadiationRepository;
+import org.vicrul.weatherapi.service.RadiationService;
 
 @Service
 public class RadiationServiceImpel extends AbstractData implements RadiationService {
