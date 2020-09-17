@@ -16,13 +16,15 @@ public abstract class AbstractData {
 
 	protected final AllDataRepo allDataRepo;
 
-	protected List<String> getMetrics(String dateStart, String dateEnd, String type) {
+	protected List<String> getMetrics(String dateStart, String dateEnd, OperationType type) {
 		List<String> metrics = null;
 
 		try {
-			if (type.equals("temp")) {
+			switch (type) {
+			case TEMPERATURE:
 				metrics = allDataRepo.getTemperature(dateStart, dateEnd);
-			} else {
+				break;
+			case RADIATION:
 				metrics = allDataRepo.getRadiation(dateStart, dateEnd);
 			}
 		} catch (Exception e) {

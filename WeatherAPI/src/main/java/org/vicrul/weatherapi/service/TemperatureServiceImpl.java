@@ -31,8 +31,7 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 			throw new Exception("Первая переданная дата должна быть меньше второй");
 		}
 
-		String type = "temp";
-		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, type);
+		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.TEMPERATURE);
 		List<String> dates = new ArrayList<String>();
 		List<Double> metrics = new ArrayList<Double>();
 		List<Temperature> temperatures = new ArrayList<Temperature>();

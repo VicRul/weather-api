@@ -31,8 +31,7 @@ public class RadiationServiceImpel extends AbstractData implements RadiationServ
 		if (!compareDates(dateStartForSearch, dateEndForSearch)) {
 			throw new Exception("Первая переданная дата должна быть меньше второй");
 		}
-		String type = "rad";
-		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, type);
+		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.RADIATION);
 		List<String> dates = new ArrayList<String>();
 		List<Double> metrics = new ArrayList<Double>();
 
