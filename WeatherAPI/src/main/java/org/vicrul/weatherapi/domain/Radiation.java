@@ -1,6 +1,6 @@
 package org.vicrul.weatherapi.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,16 +26,16 @@ public class Radiation {
 	
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "date_start")
-	private Date dateStart;
+	private LocalDate dateStart;
 
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "date_end")
-	private Date dateEnd;
+	private LocalDate dateEnd;
 	
 	@Column(name = "rad_value")
 	private double maxRadiationValue;
 
-	public Radiation(Date dateStart, Date dateEnd, double maxRadiationValue) {
+	public Radiation(LocalDate dateStart, LocalDate dateEnd, double maxRadiationValue) {
 		this.dateStart = dateStart;
 		this.dateEnd = dateEnd;
 		this.maxRadiationValue = maxRadiationValue;
