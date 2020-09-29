@@ -1,4 +1,4 @@
-package org.vicrul.weatherapi.api;
+package org.vicrul.weatherapi.service.api;
 
 import java.util.List;
 

@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.vicrul.weatherapi.api.AllDataRepo;
+import org.vicrul.weatherapi.service.api.AllDataRepo;
 import org.vicrul.weatherapi.domain.Radiation;
 import org.vicrul.weatherapi.repository.RadiationRepository;
 import org.vicrul.weatherapi.service.RadiationService;
@@ -22,16 +22,9 @@ public class RadiationServiceImpel extends AbstractData implements RadiationServ
 
 	@Override
 	public Radiation getMaxRadiationLevel(String dataStart, String dataEnd) throws Exception {
-		String dateStartForSearch = parseDate(dataStart);
-		String dateEndForSearch = parseDate(dataEnd);
-
-		if (dateStartForSearch == "" || dateEndForSearch == "") {
-			throw new Exception("Введен некорректный формат даты");
-		}
-
-		if (!compareDates(dateStartForSearch, dateEndForSearch)) {
-			throw new Exception("Первая переданная дата должна быть меньше второй");
-		}
+		Date dateStartForSearch = parseDate(dataStart);
+		Date dateEndForSearch = parseDate(dataEnd);
+		compareDates(dateStartForSearch, dateEndForSearch);
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.RADIATION);
 		List<String> dates = new ArrayList<String>();
 		List<Double> metrics = new ArrayList<Double>();

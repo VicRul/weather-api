@@ -2,12 +2,13 @@ package org.vicrul.weatherapi.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.vicrul.weatherapi.api.AllDataRepo;
+import org.vicrul.weatherapi.service.api.AllDataRepo;
 
 import lombok.AllArgsConstructor;
 
@@ -16,16 +17,17 @@ public abstract class AbstractData {
 
 	protected final AllDataRepo allDataRepo;
 
-	protected List<String> getMetrics(String dateStart, String dateEnd, OperationType type) {
+	protected List<String> getMetrics(Date dateStart, Date dateEnd, OperationType type) {
 		List<String> metrics = null;
 
 		try {
 			switch (type) {
 			case TEMPERATURE:
-				metrics = allDataRepo.getTemperature(dateStart, dateEnd);
+				metrics = allDataRepo.getTemperature(dateStart.toString(), dateEnd.toString());
 				break;
 			case RADIATION:
-				metrics = allDataRepo.getRadiation(dateStart, dateEnd);
+				System.out.println(dateStart.toString() + "  " + dateEnd.toString());
+				metrics = allDataRepo.getRadiation(dateStart.toString(), dateEnd.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -37,27 +39,19 @@ public abstract class AbstractData {
 		return metrics;
 	}
 
-	protected boolean compareDates(String dataStart, String dataEnd) {
-		Date firstDate = null;
-		Date secondDate = null;
-
-		try {
-			firstDate = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH).parse(dataStart);
-			secondDate = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH).parse(dataEnd);
-		} catch (ParseException e) {
-			e.printStackTrace();
+	protected void compareDates(Date dataStart, Date dataEnd) throws DateTimeException {
+		if (dataStart.compareTo(dataEnd) > 0) {
+			throw new DateTimeException("Дата начала периода больше даты окончания периода");
 		}
-		return firstDate.compareTo(secondDate) < 0;
 	}
 
-	protected String parseDate(String date) {
-		Date dateFromString = null;
-		String resultDate = "";
+	protected Date parseDate(String date) {
+		Date dateFromString = null, resultDate = null;
+		System.out.println(date);
 
 		try {
 			dateFromString = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH);
-			resultDate = format.format(dateFromString).toString();
+			resultDate = new SimpleDateFormat("EEE MMM dd yyyy", Locale.ENGLISH).parse(dateFromString.toString());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

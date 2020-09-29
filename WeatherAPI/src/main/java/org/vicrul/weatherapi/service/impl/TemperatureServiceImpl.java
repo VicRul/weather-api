@@ -1,10 +1,11 @@
 package org.vicrul.weatherapi.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.vicrul.weatherapi.api.AllDataRepo;
+import org.vicrul.weatherapi.service.api.AllDataRepo;
 import org.vicrul.weatherapi.domain.Temperature;
 import org.vicrul.weatherapi.repository.TemperatureRepository;
 import org.vicrul.weatherapi.service.TemperatureService;
@@ -21,16 +22,8 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 
 	@Override
 	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) throws Exception {
-		String dateStartForSearch = parseDate(dataStart);
-		String dateEndForSearch = parseDate(dataEnd);
-
-		if (dateStartForSearch == "" || dateEndForSearch == "") {
-			throw new Exception("Введен некорректный формат даты");
-		}
-
-		if (!compareDates(dateStartForSearch, dateEndForSearch)) {
-			throw new Exception("Первая переданная дата должна быть меньше второй");
-		}
+		Date dateStartForSearch = parseDate(dataStart);
+		Date dateEndForSearch = parseDate(dataEnd);
 
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.TEMPERATURE);
 		List<String> dates = new ArrayList<String>();
