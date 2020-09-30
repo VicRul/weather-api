@@ -2,6 +2,7 @@ package org.vicrul.weatherapi.service.impl;
 
 import java.time.DateTimeException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,13 @@ public abstract class AbstractData {
 	}
 
 	protected LocalDate parseDate(String date) {
-		return LocalDate.parse(date);
+		LocalDate resultDate = null;
+		
+		try {
+			resultDate = LocalDate.parse(date);
+		} finally {
+			resultDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+		}
+		return resultDate;
 	}
 }

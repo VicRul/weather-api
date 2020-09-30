@@ -14,60 +14,49 @@ import org.vicrul.weatherapi.service.TemperatureService;
 public class TemperatureServiceImpl extends AbstractData implements TemperatureService {
 
 	private final TemperatureRepository tempRepo;
-	
+
 	public TemperatureServiceImpl(AllDataRepo allDataRepo, TemperatureRepository tempRepo) {
 		super(allDataRepo);
 		this.tempRepo = tempRepo;
 	}
 
 	@Override
-	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) throws Exception {
+	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) {
 		LocalDate dateStartForSearch = parseDate(dataStart);
 		LocalDate dateEndForSearch = parseDate(dataEnd);
 
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.TEMPERATURE);
-		List<String> dates = new ArrayList<String>();
-		List<Double> metrics = new ArrayList<Double>();
-		List<Temperature> temperatures = new ArrayList<Temperature>();
+		List<Temperature> temperatures = new ArrayList<>();
 
-		for (int element = 0; element < apiData.size(); element++) {
-			if (element % 2 == 0) {
-				String date = apiData.get(element).substring(1, 9);
-				dates.add(date);
-			} else {
-				Double temperature = Double.parseDouble(apiData.get(element));
-				metrics.add(temperature);
-			}
-		}
+		int numberOfMetricsInDay = 1;
+		String lastDate = apiData.get(0).substring(1, 9);
+		double firsMetric = Double.parseDouble(apiData.get(1));
+		double averageTemperature = firsMetric, minTemperature = firsMetric, maxTemperature = firsMetric;
 
-		double averageTemperature = 0;
-		double minTemperature = 0;
-		double maxTemperature = 0;
-		int numberOfMetricsInDay = 0;
-		for (int i = 0; i < dates.size(); i++) {
-			numberOfMetricsInDay++;
-			
-			if (i != 0 && dates.get(i).equals(dates.get(i - 1))) {
-				averageTemperature += metrics.get(i);
-				minTemperature = (metrics.get(i) < metrics.get(i - 1)) ? metrics.get(i) : minTemperature;
-				maxTemperature = (metrics.get(i) > metrics.get(i - 1)) ? metrics.get(i) : maxTemperature;
-				
-				if ((i + 1) == dates.size()) {
+		for (int i = 2; i < apiData.size(); i++) {
+			if (i % 2 == 0) {
+				String currentDate = apiData.get(i).substring(1, 9);
+				if (currentDate.equals(lastDate)) {
+					numberOfMetricsInDay++;
+				} else {
 					averageTemperature /= numberOfMetricsInDay;
-					//temperatures.add(new Temperature(parseDateToDB(dates.get(i)), averageTemperature, minTemperature, maxTemperature));
+					temperatures.add(new Temperature(parseDate(lastDate), averageTemperature, minTemperature, maxTemperature));
+					averageTemperature = 0;
+					lastDate = currentDate;
+					minTemperature = 0;
+					maxTemperature = 0;
+					numberOfMetricsInDay = 1;
 				}
-				
-				continue;
-			} else if (i != 0 && !dates.get(i).equals(dates.get(i - 1))) {
-				averageTemperature /= numberOfMetricsInDay;
-				//emperatures.add(new Temperature(parseDateToDB(dates.get(i - 1)), averageTemperature, minTemperature, maxTemperature));
-				averageTemperature = metrics.get(i);
-				minTemperature = metrics.get(i);
-				numberOfMetricsInDay = 0;
+			} else {
+				double currentTemperature = Double.parseDouble(apiData.get(i));
+				averageTemperature += currentTemperature;
+				maxTemperature = (maxTemperature < currentTemperature) ? currentTemperature : maxTemperature;
+				minTemperature = (minTemperature > currentTemperature) ? currentTemperature : minTemperature;
+				if (i == apiData.size() - 1) {
+					averageTemperature /= numberOfMetricsInDay;
+					temperatures.add(new Temperature(parseDate(lastDate), averageTemperature, minTemperature, maxTemperature));					
+				}
 			}
-			
-			averageTemperature = metrics.get(i);
-			minTemperature = metrics.get(i);
 		}
 		tempRepo.deleteAll();
 		tempRepo.saveAll(temperatures);
