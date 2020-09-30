@@ -31,9 +31,10 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 		int numberOfMetricsInDay = 1;
 		String lastDate = apiData.get(0).substring(1, 9);
 		double firsMetric = Double.parseDouble(apiData.get(1));
-		double averageTemperature = firsMetric, minTemperature = firsMetric, maxTemperature = firsMetric;
+		double averageTemperature = 0, minTemperature = firsMetric, maxTemperature = firsMetric;
 
 		for (int i = 2; i < apiData.size(); i++) {
+			double currentTemperature = 0;
 			if (i % 2 == 0) {
 				String currentDate = apiData.get(i).substring(1, 9);
 				if (currentDate.equals(lastDate)) {
@@ -41,14 +42,15 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 				} else {
 					averageTemperature /= numberOfMetricsInDay;
 					temperatures.add(new Temperature(parseDate(lastDate), averageTemperature, minTemperature, maxTemperature));
-					averageTemperature = 0;
+					currentTemperature = Double.parseDouble(apiData.get(i + 1));
 					lastDate = currentDate;
-					minTemperature = 0;
-					maxTemperature = 0;
+					averageTemperature = 0;
+					minTemperature = currentTemperature;
+					maxTemperature = currentTemperature;
 					numberOfMetricsInDay = 1;
 				}
 			} else {
-				double currentTemperature = Double.parseDouble(apiData.get(i));
+				currentTemperature = Double.parseDouble(apiData.get(i));
 				averageTemperature += currentTemperature;
 				maxTemperature = (maxTemperature < currentTemperature) ? currentTemperature : maxTemperature;
 				minTemperature = (minTemperature > currentTemperature) ? currentTemperature : minTemperature;

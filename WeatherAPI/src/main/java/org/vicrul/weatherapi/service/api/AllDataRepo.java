@@ -22,7 +22,6 @@ public class AllDataRepo {
 	
 	private List<String> getMetrics(Call<List<String> > searchData) throws Exception {
 		Response<List<String> > execute = searchData.execute();
-		System.out.println(execute);
 		List<String>  result = execute.body();
 		return result;
 	}

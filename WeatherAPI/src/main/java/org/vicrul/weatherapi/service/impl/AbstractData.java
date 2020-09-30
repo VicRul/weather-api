@@ -48,8 +48,12 @@ public abstract class AbstractData {
 		
 		try {
 			resultDate = LocalDate.parse(date);
+		} catch (Exception e) {
+			
 		} finally {
-			resultDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+			if (resultDate == null) {
+				resultDate = LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyyMMdd"));
+			}
 		}
 		return resultDate;
 	}
