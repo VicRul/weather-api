@@ -1,6 +1,6 @@
 package org.vicrul.weatherapi.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +26,7 @@ public class Temperature {
 
 	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name = "date")
-	private Date date;
+	private LocalDate date;
 	
 	@Column(name = "avg_temp")
 	private double averageTemperature;
@@ -37,7 +37,7 @@ public class Temperature {
 	@Column(name = "max_temp")
 	private double maxTemperature;
 
-	public Temperature(Date date, double averageTemperature, double minTemperature, double maxTemperature) {
+	public Temperature(LocalDate date, double averageTemperature, double minTemperature, double maxTemperature) {
 		this.date = date;
 		this.averageTemperature = averageTemperature;
 		this.minTemperature = minTemperature;

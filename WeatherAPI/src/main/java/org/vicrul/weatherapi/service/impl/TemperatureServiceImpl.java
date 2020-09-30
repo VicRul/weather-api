@@ -1,7 +1,7 @@
 package org.vicrul.weatherapi.service.impl;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -22,8 +22,8 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 
 	@Override
 	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) throws Exception {
-		Date dateStartForSearch = parseDate(dataStart);
-		Date dateEndForSearch = parseDate(dataEnd);
+		LocalDate dateStartForSearch = parseDate(dataStart);
+		LocalDate dateEndForSearch = parseDate(dataEnd);
 
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.TEMPERATURE);
 		List<String> dates = new ArrayList<String>();
@@ -54,13 +54,13 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 				
 				if ((i + 1) == dates.size()) {
 					averageTemperature /= numberOfMetricsInDay;
-					temperatures.add(new Temperature(parseDateToDB(dates.get(i)), averageTemperature, minTemperature, maxTemperature));
+					//temperatures.add(new Temperature(parseDateToDB(dates.get(i)), averageTemperature, minTemperature, maxTemperature));
 				}
 				
 				continue;
 			} else if (i != 0 && !dates.get(i).equals(dates.get(i - 1))) {
 				averageTemperature /= numberOfMetricsInDay;
-				temperatures.add(new Temperature(parseDateToDB(dates.get(i - 1)), averageTemperature, minTemperature, maxTemperature));
+				//emperatures.add(new Temperature(parseDateToDB(dates.get(i - 1)), averageTemperature, minTemperature, maxTemperature));
 				averageTemperature = metrics.get(i);
 				minTemperature = metrics.get(i);
 				numberOfMetricsInDay = 0;
