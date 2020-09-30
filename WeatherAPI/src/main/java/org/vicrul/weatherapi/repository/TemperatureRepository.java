@@ -1,8 +1,13 @@
 package org.vicrul.weatherapi.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.vicrul.weatherapi.domain.Temperature;
 
 public interface TemperatureRepository extends JpaRepository<Temperature, Integer>{
 	
+	@Query(nativeQuery = true, value = "SELECT * FROM temperatures ORDER BY id DESC LIMIT :limit")
+	List<Temperature> findImportValues(int limit);
 }
