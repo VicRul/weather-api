@@ -13,7 +13,4 @@ public interface TemperatureRepository extends JpaRepository<Temperature, Intege
 	
 	@Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END FROM Temperature t WHERE t.date = :date")
 	boolean findByDate(LocalDate date);
-	
-	@Query(nativeQuery = true, value = "SELECT * FROM temperatures ORDER BY id DESC LIMIT :limit")
-	List<Temperature> findImportValues(int limit);
 }

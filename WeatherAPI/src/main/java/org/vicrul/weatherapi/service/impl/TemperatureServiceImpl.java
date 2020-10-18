@@ -1,7 +1,6 @@
 package org.vicrul.weatherapi.service.impl;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,6 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 	public List<Temperature> saveTemperatures(String dataStart, String dataEnd) {
 		LocalDate dateStartForSearch = parseDate(dataStart);
 		LocalDate dateEndForSearch = parseDate(dataEnd);
-		int numberOfDays = (int) ChronoUnit.DAYS.between(dateStartForSearch, dateEndForSearch);
 		System.out.println(tempRepo.findByDate(dateStartForSearch));
 
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.TEMPERATURE);
