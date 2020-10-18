@@ -25,18 +25,26 @@ public class RadiationServiceImpl extends AbstractData implements RadiationServi
 		LocalDate dateEndForSearch = parseDate(dataEnd);
 		compareDates(dateStartForSearch, dateEndForSearch);
 		List<String> apiData = getMetrics(dateStartForSearch, dateEndForSearch, OperationType.RADIATION);
+		boolean datesIntervalExistInDB = radiationRepo.findByDates(dateStartForSearch, dateEndForSearch);
 
 		double maxRadiationValue = Double.parseDouble(apiData.get(1));
 		for (int metric = 3; metric < apiData.size(); metric++) {
+			if (datesIntervalExistInDB) {
+				break;
+			}
+			
 			if (metric % 2 != 0) {
 				double curentMetric = Double.parseDouble(apiData.get(metric));
 				maxRadiationValue = (curentMetric > maxRadiationValue) ? curentMetric : maxRadiationValue;
 			}
 		}
 		
-		Radiation maxRadiation = new Radiation(dateStartForSearch, dateEndForSearch, maxRadiationValue);
-		radiationRepo.save(maxRadiation);
-		return radiationRepo.findTopByDateStartAndDateEnd(dateStartForSearch, dateEndForSearch);
+		if (!datesIntervalExistInDB) {
+			Radiation maxRadiation = new Radiation(dateStartForSearch, dateEndForSearch, maxRadiationValue);
+			radiationRepo.save(maxRadiation);
+		}
+		
+		return radiationRepo.findByDateStartAndDateEnd(dateStartForSearch, dateEndForSearch);
 	}
 
 }
