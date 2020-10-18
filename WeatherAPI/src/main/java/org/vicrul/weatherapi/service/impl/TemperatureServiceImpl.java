@@ -86,6 +86,6 @@ public class TemperatureServiceImpl extends AbstractData implements TemperatureS
 		}
 		
 		tempRepo.saveAll(temperatures);
-		return tempRepo.findImportValues(numberOfDays);
+		return tempRepo.findByDateBetweenOrderByDateAsc(dateStartForSearch, dateEndForSearch);
 	}
 }
